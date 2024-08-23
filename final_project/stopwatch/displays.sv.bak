@@ -1,0 +1,68 @@
+module displays(clk, reset, H0, H1, H3); 
+	input logic clk, reset; 
+	output logic [6:0] H0, H1, H3; 
+	
+	logic [3:0] minutes, tens; 
+	
+	enum {h0, h1, h2, h3, h4, h5, h6, h7, h8, h9} ps, ns; 
+	
+	always_comb begin 
+		case(ps)
+			h0: ns = h1;  
+			h1: ns = h2; 
+			h2: ns = h3; 
+			h3: ns = h4; 
+			h4: ns = h5; 
+			h5: ns = h6; 
+			h6: ns = h7; 
+			h7: ns = h8; 
+			h8: ns = h9; 
+			h9: ns = h0; 
+		endcase
+	end 
+	
+	always_ff @(posedge clk) begin 
+		if(reset)
+			ps <= h0; 	
+			minutes <= 0;
+			tens <= 0; 
+		else begin  
+			ps <= ns;
+			if((ps == h9) && (tens == 4'd5)) begin
+				minutes <= minutes + 1; 
+				tens <= 0;
+			end else if (ps == h9) begin 
+				minutes <= minutes; 
+				tens <= tens + 1; 
+			end else begin 
+				minutes <= minutes; 
+				tens <= tens; 
+		end 
+		
+		if(ps == h0)
+			H0 = 7'b1000000; 
+		else if (ps == h1)
+			H0 = 7'b1111001; 
+		else if (ps == h2)
+			H0 = 7'b0100100;
+		else if (ps == h3)
+			H0 = 7'b0110000;
+		else if (ps == h4)
+			H0 = 7'b0011001;
+		else if (ps == h5)
+			H0 = 7'b0010010;
+		else if (ps == h6)
+			H0 = 7'b0000010;
+		else if (ps == h7)
+			H0 = 7'b1111000;
+		else if (ps == h8)
+			H0 = 7'b0000000;
+		else if (ps == h9)
+			H0 = 7'b0010000;
+			
+	end 
+	
+	
+	seg7 h1 (.hex(tens), .leds(H1));
+	seg7 h3 (.hex(minute), .leds(H3));
+endmodule 

@@ -1,0 +1,16 @@
+module clock_body_tb(); 
+	logic clk, reset, x, y, clk_done; 
+	
+	initial begin
+		clk <= 0; 
+		forever #(100/2) clk <= ~clk; 
+	end
+	
+	initial begin 
+		reset <= 1; @(posedge clk); 
+		reset <= 0; @(posedge clk); 
+		
+		
+		$stop; @(posedge clk_done); 
+	end
+endmodule 

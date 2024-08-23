@@ -1,0 +1,33 @@
+module clock_arm(clk, reset, x, y, one_second);
+	input logic clk, reset, one_second; 
+	output logic [10:0] x, y; 
+	
+	logic [8:0] x_f, y_f;
+	logic [10:0] x_t, y_t, centrex, centrey; 
+	logic done, start;
+	logic [5:0] counter;
+	
+	always_ff @(posedge clk) begin 
+		if(reset | counter == 6'd59)
+			counter <= 0; 
+		else begin 
+			if(one_second & done)
+				counter <= counter + 1; 
+			else 
+				counter <= counter; 
+		end 
+		
+		if(done)
+			start <= 0; 
+		else 
+			start <= 1; 
+	end 
+	
+	RAM_arm_x x_vals (.address(counter), .clock(clk), .data(0), .wren(1'b0), .q(x_f));
+	RAM_arm_y y_vals (.address(counter), .clock(clk), .data(0), .wren(1'b0), .q(y_f));
+	
+	assign x_t = {2'b00, x_f}; 
+	assign y_t = {2'b00, y_f}; 
+	assign centrex = 11'd320;
+	assign centrey = 11'd250; 
+endmodule 

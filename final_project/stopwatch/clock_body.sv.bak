@@ -1,0 +1,51 @@
+module clock_body(clk, reset, x, y, clk_done);
+	input logic clk, reset; 
+	output logic [10:0] x, y; 
+	output logic clk_done; 
+	
+	logic [10:0] x0, y0, x1, y1, x_c, y_c, x_l, y_l;
+	logic done, point, done_l, start;
+	logic [8:0] x0_temp, x1_temp, y0_temp, y1_temp; 
+	
+	logic [4:0] counter; 
+	
+	RAM_x0 x_0 (.address(counter), .clock(clk), .data(0), .wren(1'b0), .q(x0_temp));
+	RAM_y0 y_0 (.address(counter), .clock(clk), .data(0), .wren(1'b0), .q(y0_temp));
+	RAM_x1 x_1 (.address(counter), .clock(clk), .data(0), .wren(1'b0), .q(x1_temp));
+	RAM_y1 y_1 (.address(counter), .clock(clk), .data(0), .wren(1'b0), .q(y1_temp));
+	
+	assign x0 = {2'b00, x0_temp}; 
+	assign x1 = {2'b00, x1_temp}; 
+	assign y0 = {2'b00, y0_temp}; 
+	assign y1 = {2'b00, y1_temp}; 
+	
+	always_ff @(posedge clk) begin 
+		if(reset)
+			counter <= 0;  
+		else if (counter == 5'd11) 
+			counter <= counter;
+		else if (done & done_l & ~start) 
+			counter <= counter + 1'b1;
+		
+		if (counter == 5'd11)
+		    clk_done <= 1; 
+		else 
+		    clk_done <= 0; 
+		if(done) begin
+			x <= x_l; 
+			y <= y_l; 
+		end else begin 
+			x <= x_c; 
+			y <= y_c; 
+		end 
+		
+		if(~done_l & done)
+			start <= 1; 
+		else 
+			start <= 0; 
+	end
+	
+	line_drawer clock_marks (.clk, .reset, .start, .x0, .y0, .x1, .y1, .x(x_l), .y(y_l), .done(done_l));
+	
+	circle_drawer clock_circle (.clk, .reset, .x1(320), .y1(250), .r(120), .x(x_c), .y(y_c), .point, .done);
+endmodule 

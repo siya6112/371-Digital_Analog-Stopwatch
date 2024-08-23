@@ -1,0 +1,27 @@
+`timescale 1 ps / 1 ps 
+module clock_arm_tb(); 
+	logic reset, clk, clk50;
+	logic [10:0] x, y;
+	logic [5:0] counter; 
+	
+	clock_arm dut (.*); 
+	
+	parameter CLOCK_PERIOD =100;
+	initial begin
+		clk <= 0;
+		forever #(CLOCK_PERIOD/5) clk = ~clk; 
+	end // initial
+	
+	initial begin
+		clk50 <= 0;
+		forever #(CLOCK_PERIOD/10) clk50 = ~clk50; 
+	end // initial
+	
+	initial begin 
+		reset <= 1; @(posedge clk); 
+		reset <= 0; @(posedge clk);
+		
+		repeat(1000) @(posedge clk); 
+		$stop; 
+	end 
+endmodule 

@@ -1,0 +1,86 @@
+-- Copyright (C) 2017  Intel Corporation. All rights reserved.
+-- Your use of Intel Corporation's design tools, logic functions 
+-- and other software and tools, and its AMPP partner logic 
+-- functions, and any output files from any of the foregoing 
+-- (including device programming or simulation files), and any 
+-- associated documentation or information are expressly subject 
+-- to the terms and conditions of the Intel Program License 
+-- Subscription Agreement, the Intel Quartus Prime License Agreement,
+-- the Intel MegaCore Function License Agreement, or other 
+-- applicable license agreement, including, without limitation, 
+-- that your use is for the sole purpose of programming logic 
+-- devices manufactured by Intel and sold by Intel or its 
+-- authorized distributors.  Please refer to the applicable 
+-- agreement for further details.
+
+-- Quartus Prime generated Memory Initialization File (.mif)
+
+WIDTH=9;
+DEPTH=60;
+
+ADDRESS_RADIX=UNS;
+DATA_RADIX=UNS;
+
+CONTENT BEGIN
+    0   :   140;
+    1   :   141;
+    2   :   142;
+    3   :   145;
+    4   :   150;
+    5   :   155;
+    6   :   161;
+    7   :   168;
+    8   :   176;
+    9   :   185;
+    10  :   195;
+    11  :   205;
+    12  :   216;
+    13  :   227;
+    14  :   239;
+    15  :   250;
+    16  :   261;
+    17  :   273;
+    18  :   284;
+    19  :   295;
+    20  :   305;
+    21  :   315;
+    22  :   324;
+    23  :   332;
+    24  :   339;
+    25  :   345;
+    26  :   350;
+    27  :   355;
+    28  :   358;
+    29  :   359;
+    30  :   360;
+    31  :   359;
+    32  :   358;
+    33  :   355;
+    34  :   350;
+    35  :   345;
+    36  :   339;
+    37  :   332;
+    38  :   324;
+    39  :   315;
+    40  :   305;
+    41  :   295;
+    42  :   284;
+    43  :   273;
+    44  :   261;
+    45  :   250;
+    46  :   239;
+    47  :   227;
+    48  :   216;
+    49  :   205;
+    50  :   195;
+    51  :   185;
+    52  :   176;
+    53  :   168;
+    54  :   161;
+    55  :   155;
+    56  :   150;
+    57  :   145;
+    58  :   142;
+    59  :   141;
+    
+END;
